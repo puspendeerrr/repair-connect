@@ -1,0 +1,125 @@
+.onboarding-page {
+  min-height: calc(100vh - 72px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.onboarding-card {
+  max-width: 520px;
+  width: 100%;
+  padding: 40px 32px;
+}
+
+.onboarding-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.onboarding-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.step-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.dot {
+  width: 32px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border-color);
+  transition: background 0.3s;
+}
+
+.dot.active {
+  background: var(--amber);
+}
+
+.ob-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 240px;
+}
+
+.role-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.role-card {
+  background: var(--bg-input);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--text-primary);
+}
+
+.role-card:hover {
+  border-color: var(--border-light);
+}
+
+.role-card.selected {
+  border-color: var(--amber);
+  background: var(--amber-light);
+}
+
+.role-card.selected svg {
+  color: var(--amber);
+}
+
+.role-card strong {
+  font-size: 0.875rem;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.813rem;
+  font-weight: 500;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.skill-tag:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.skill-tag.selected {
+  background: var(--amber);
+  color: var(--bg-primary);
+  border-color: var(--amber);
+}
+
+.ob-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
