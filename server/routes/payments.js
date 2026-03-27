@@ -11,6 +11,10 @@ const router = express.Router();
 /* POST /api/payments/create-order */
 router.post('/create-order', protect, async (req, res) => {
   try {
+    if (!razorpay) {
+      return res.status(503).json({ error: 'Payments are currently disabled.' });
+    }
+
     const { bookingId, amount } = req.body;
     const booking = await Booking.findById(bookingId);
     if (!booking) return res.status(404).json({ error: 'Booking not found.' });
@@ -35,6 +39,10 @@ router.post('/create-order', protect, async (req, res) => {
 /* POST /api/payments/verify */
 router.post('/verify', protect, async (req, res) => {
   try {
+    if (!razorpay) {
+      return res.status(503).json({ error: 'Payments are currently disabled.' });
+    }
+
     const { razorpayOrderId, razorpayPaymentId, razorpaySignature } = req.body;
 
     const body = razorpayOrderId + '|' + razorpayPaymentId;
