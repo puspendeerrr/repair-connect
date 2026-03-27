@@ -8,6 +8,11 @@ const { sendOtpEmail } = require('../utils/mailer');
 
 const router = express.Router();
 
+// Debug Route to verify /api/auth works
+router.get('/', (req, res) => {
+  res.json({ message: 'Auth route working' });
+});
+
 /* ---------- helpers ---------- */
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 

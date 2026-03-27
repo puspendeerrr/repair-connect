@@ -43,7 +43,9 @@ app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
 
 // API routes
+// Mount both at /api/auth and /api to ensure direct calls to /api/send-otp work
 app.use('/api/auth', authRoutes);
+app.use('/api', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/requests', requestRoutes);
 app.use('/api/quotes', quoteRoutes);
@@ -60,8 +62,10 @@ app.get('/', (req, res) => {
 });
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
 
-// 404
-app.use((req, res) => res.status(404).json({ error: 'Route not found.' }));
+// 404 catch-all
+app.use("*", (req, res) => {
+  res.status(404).json({ error: "Route not found." });
+});
 
 // Error handler
 app.use((err, req, res, next) => {
