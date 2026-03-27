@@ -63,7 +63,7 @@ app.get('/', (req, res) => {
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
 
 // 404 catch-all
-app.use("*", (req, res) => {
+app.use((req, res) => {
   res.status(404).json({ error: "Route not found." });
 });
 
