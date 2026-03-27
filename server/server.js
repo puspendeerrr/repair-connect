@@ -56,6 +56,18 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/upload', uploadRoutes);
 
+// Fallback mounts without /api for incorrectly configured frontends
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/requests', requestRoutes);
+app.use('/quotes', quoteRoutes);
+app.use('/bookings', bookingRoutes);
+app.use('/messages', messageRoutes);
+app.use('/reviews', reviewRoutes);
+app.use('/payments', paymentRoutes);
+app.use('/notifications', notificationRoutes);
+app.use('/upload', uploadRoutes);
+
 // Health check
 app.get('/', (req, res) => {
   res.send('API running');

@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import Navbar from './components/layout/Navbar';
@@ -30,6 +31,28 @@ function ProtectedRoute({ children, allowedRoles }) {
 }
 
 function AppRoutes() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = location.pathname;
+    let title = 'Repair Connect';
+
+    if (path === '/') title = 'Repair Connect - Your Trusted Repair Partner';
+    else if (path === '/login') title = 'Login | Repair Connect';
+    else if (path === '/onboarding') title = 'Setup Profile | Repair Connect';
+    else if (path.includes('/dashboard')) title = 'Dashboard | Repair Connect';
+    else if (path.includes('/post-request')) title = 'Post Request | Repair Connect';
+    else if (path.includes('/requests/')) title = 'Request Details | Repair Connect';
+    else if (path.includes('/bookings/')) title = 'Booking Details | Repair Connect';
+    else if (path.includes('/bookings')) title = 'My Bookings | Repair Connect';
+    else if (path.includes('/browse')) title = 'Browse Jobs | Repair Connect';
+    else if (path.includes('/my-quotes')) title = 'My Quotes | Repair Connect';
+    else if (path.includes('/admin/users')) title = 'Manage Users | Repair Connect';
+    else if (path.includes('/chat/')) title = 'Chat | Repair Connect';
+
+    document.title = title;
+  }, [location]);
+
   return (
     <Routes>
       {/* Public */}
