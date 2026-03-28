@@ -3,10 +3,9 @@ import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { getMessages } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
+import { API_SERVER_URL } from '../../config/api.config';
 import { PaperPlaneTilt } from 'phosphor-react';
 import './ChatPage.css';
-
-const SOCKET_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
 
 export default function ChatPage() {
   const { bookingId } = useParams();
@@ -23,7 +22,7 @@ export default function ChatPage() {
     getMessages(bookingId).then(({ data }) => setMessages(data.messages)).catch(() => {});
 
     // socket connection
-    const s = io(SOCKET_URL, { withCredentials: true });
+    const s = io(API_SERVER_URL, { withCredentials: true });
     s.emit('join_room', { bookingId });
     s.on('receive_message', (msg) => {
       setMessages((prev) => [...prev, msg]);
