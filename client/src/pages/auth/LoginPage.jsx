@@ -62,12 +62,14 @@ export default function LoginPage() {
       const { data } = await verifyOtp(email, code || otp.join(''));
       
       if (!data.isNewUser) {
+        localStorage.setItem('token', data.token);
+        console.log('Token stored in localStorage:', data.token);
         login(data.user);
         toast.success(`Welcome back, ${data.user.name}!`);
         const path = data.user.role === 'admin' ? '/admin/dashboard'
           : data.user.role === 'provider' ? '/provider/dashboard'
           : '/customer/dashboard';
-        navigate(path);
+        window.location.href = path;
       } else {
         toast.success('Email verified! Please complete your profile.');
         navigate('/onboarding', { state: { email, tempToken: data.tempToken } });

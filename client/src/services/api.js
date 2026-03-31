@@ -4,7 +4,16 @@ import { API_BASE_URL } from '../config/api.config';
 const api = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
-  headers: { 'Content-Type': 'application/json' },
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
 });
 
 // Auth
@@ -59,8 +68,8 @@ export const markAllNotificationsRead = () => api.patch('/notifications/read-all
 
 // Upload
 export const uploadImage = (formData) =>
-  api.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+  api.post('/upload', formData);
 export const uploadMultipleImages = (formData) =>
-  api.post('/upload/multiple', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+  api.post('/upload/multiple', formData);
 
 export default api;

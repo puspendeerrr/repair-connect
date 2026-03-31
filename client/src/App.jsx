@@ -23,6 +23,11 @@ import AdminUsersPage from './pages/admin/AdminUsersPage';
 import ChatPage from './pages/chat/ChatPage';
 
 function ProtectedRoute({ children, allowedRoles }) {
+  if (!localStorage.getItem('token')) {
+    window.location.href = '/login';
+    return null;
+  }
+  
   const { user, loading } = useAuth();
   if (loading) return <LoadingSpinner size="lg" text="Loading..." />;
   if (!user) return <Navigate to="/login" replace />;
