@@ -28,6 +28,7 @@ const cookieOptions = {
 
 /* ---------- POST /api/auth/send-otp ---------- */
 router.post('/send-otp', async (req, res) => {
+  console.log('Hit: POST /api/auth/send-otp');
   try {
     const { email } = req.body;
     if (!email) return res.status(400).json({ error: 'Email is required.' });
@@ -60,6 +61,7 @@ router.post('/send-otp', async (req, res) => {
 
 /* ---------- POST /api/auth/verify-otp ---------- */
 router.post('/verify-otp', async (req, res) => {
+  console.log('Hit: POST /api/auth/verify-otp');
   try {
     const { email, otp } = req.body;
     if (!email || !otp) return res.status(400).json({ error: 'Email and OTP are required.' });
@@ -95,6 +97,7 @@ router.post('/verify-otp', async (req, res) => {
 
 /* ---------- POST /api/auth/register ---------- */
 router.post('/register', async (req, res) => {
+  console.log('Hit: POST /api/auth/register');
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -144,12 +147,14 @@ router.post('/register', async (req, res) => {
 
 /* ---------- POST /api/auth/logout ---------- */
 router.post('/logout', (req, res) => {
+  console.log('Hit: POST /api/auth/logout');
   res.clearCookie('repair_connect_token');
   res.json({ success: true, message: 'Logged out.' });
 });
 
 /* ---------- GET /api/auth/me ---------- */
 router.get('/me', async (req, res) => {
+  console.log('Hit: GET /api/auth/me');
   try {
     const token = req.cookies.repair_connect_token;
     if (!token) return res.status(401).json({ error: 'Not authenticated.' });

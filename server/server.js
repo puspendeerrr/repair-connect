@@ -8,7 +8,7 @@ const connectDB = require('./config/db');
 const setupSocket = require('./socket/index');
 
 // route imports
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/users');
 const requestRoutes = require('./routes/requests');
 const quoteRoutes = require('./routes/quotes');
@@ -36,16 +36,14 @@ app.set('io', io);
 
 // Middleware
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin: "https://repair-connect.netlify.app",
   credentials: true,
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
 
 // API routes
-// Mount both at /api/auth and /api to ensure direct calls to /api/send-otp work
 app.use('/api/auth', authRoutes);
-app.use('/api', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/requests', requestRoutes);
 app.use('/api/quotes', quoteRoutes);
@@ -57,7 +55,6 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/upload', uploadRoutes);
 
 // Fallback mounts without /api for incorrectly configured frontends
-app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/requests', requestRoutes);
 app.use('/quotes', quoteRoutes);
@@ -76,7 +73,7 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Dat
 
 // 404 catch-all
 app.use((req, res) => {
-  res.status(404).json({ error: "Route not found." });
+  res.status(404).json({ error: "Route not found" });
 });
 
 // Error handler
